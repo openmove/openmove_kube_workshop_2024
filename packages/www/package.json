@@ -1,0 +1,9 @@
+{
+    "name": "@openmove_kube_workshop_2024/www",
+    "version": "1.0.0",
+    "main": "./src/index.js",
+    "scripts": {
+        "build": "",
+        "start": "node ./src/index.js"
+    }
+}

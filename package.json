@@ -1,0 +1,12 @@
+{
+  "name": "openmove_kube_workshop_2024",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm run build --workspaces --if-present"
+  },
+  "workspaces":[
+    "packages/*"
+  ],
+  "author": "riccardo.martinelli@openmove.com",
+  "license": "ISC"
+}
