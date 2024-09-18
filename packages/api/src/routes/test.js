@@ -15,7 +15,6 @@ module.exports = fastifyPlugin(async(server, {
     'url': '/test',
     'method': 'GET',
     'schema': {
-      'hide': true,
       'description': 'TEST',
       'tags': ['TEST']
     },

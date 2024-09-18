@@ -28,7 +28,6 @@ const logModule = require('./logger')
 (async() => {
   server.log.info('[WORKSHOP] Setting up server');
 
-
   server.log.info('[WORKSHOP] Setting up server plugins');
   await server.register(require('./plugins'), confs);
 
