@@ -7,6 +7,12 @@
   "workspaces":[
     "packages/*"
   ],
+  "dependencies": {
+    "eslint": "8.23.1",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "6.0.1"
+  },
   "author": "riccardo.martinelli@openmove.com",
   "license": "ISC"
 }

@@ -1,0 +1,37 @@
+_out
+
+# Logs
+*.log
+
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# IDE customization files
+.vscode/
+
+# Dependency directories
+node_modules/
+**/node_modules/
+
+# dotenv environment variables file
+.env
+
+# OS X temporary files
+.DS_Store
+
+# Infrastructure
+packages/1.1-infrastructure/utils-migrations/_run
+packages/1.1-infrastructure/_cluster-management
+
+# GTFS
+packages/3.2-gtfs/import
+
+# Fleet-Mng
+packages/4.3-fleet-mng/reactor/src/actions/tests*
+packages/4.3-fleet-mng/**/_tests
+packages/4.3-fleet-mng/**/_tests
+
+# Ops
+**/ops/schema

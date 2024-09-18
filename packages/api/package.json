@@ -1,17 +1,35 @@
 {
     "name": "@openmove_kube_workshop_2024/api",
     "version": "1.0.0",
-    "main": "./src/index.js",
-    "scripts": {
-        "build": "",
-        "start": "node ./src/index.js"
+    "main": "index.js",
+    "devDependencies": {
+      "@fastify/cors": "8.1.0",
+      "pino-pretty": "8.1.0"
     },
     "dependencies": {
-        "fastify": "^5.0.0",
-        "fastify-multipart": "^5.4.0",
-        "fs-extra": "^11.2.0",
-        "gridfs-stream": "^1.1.1",
-        "mongodb": "^6.9.0",
-        "mongoose": "^8.6.3"
+      "fastify": "4.23.1",
+      "@fastify/auth": "4.0.0",
+      "@fastify/cookie": "8.1.0",
+      "@fastify/formbody": "7.2.0",
+      "@fastify/multipart": "7.3.0",
+      "@fastify/rate-limit": "8.0.3",
+      "@fastify/jwt": "6.3.2",
+      "@fastify/swagger": "8.14.0",
+      "@fastify/swagger-ui": "3.0.0",
+      "fastify-plugin": "4.2.1",
+      "@fastify/view": "7.1.0",
+      "mongodb": "3.7.3",
+      "amqplib": "0.10.3",
+      "camelcase": "6.3.0",
+      "@relaycorp/pino-cloud": "1.0.18",
+      "pino": "8.5.0",
+      "ajv": "6.9.1",
+      "ajv-keywords": "3.5.2",
+      "query-string": "7.1.1"
+    },
+    "scripts": {
+        "build": "",
+        "start": "node index.js",
+        "debug": "node --inspect-brk index.js"
     }
 }
