@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+#drop-area {
+    width: 500px;
+    height: 200px;
+    margin: 20px auto;
+    text-align: center;
+    line-height: 200px;
+    border: 2px dashed #ccc;
+    cursor: pointer;
+}
+
+#drop-area.drag-over {
+    background-color: #eee;
+  }
+
+#preview-container {
+    text-align: center;
+}
+
+#download-area {
+    width: 500px;
+    height: 200px;
+    margin: 20px auto;
+    text-align: center;
+    line-height: 200px;
+    background-color: #98fb89;
+    border: 2px dashed #64af59;
+}
+
+#back-area {
+    margin: 20px auto;
+    text-align: center;
+}
