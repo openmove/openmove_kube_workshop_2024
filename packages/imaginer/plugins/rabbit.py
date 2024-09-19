@@ -9,6 +9,5 @@ def create_connection(confs):
 
   confs.log.debug('Istantiating connection')
   connection = pika.BlockingConnection(parameters)
-  channel = connection.channel()
 
-  confs.rabbit = channel
+  confs.rabbit = connection
