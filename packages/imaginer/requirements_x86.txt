@@ -1,0 +1,7 @@
+colorlog @ file:///Users/runner/miniforge3/conda-bld/colorlog_1724959577118/work
+dnspython @ file:///home/conda/feedstock_root/build_artifacts/dnspython_1709190728464/work
+pika @ file:///home/conda/feedstock_root/build_artifacts/pika_1667818065465/work
+pymongo @ file:///Users/runner/miniforge3/conda-bld/pymongo_1726757976170/work
+setuptools==74.1.2
+sniffio @ file:///home/conda/feedstock_root/build_artifacts/sniffio_1708952932303/work
+wheel==0.44.0
