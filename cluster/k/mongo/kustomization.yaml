@@ -5,7 +5,7 @@ secretGenerator:
     literals:
       - MONGO_ADMIN_USER=WhosAsking
       - MONGO_ADMIN_PASS=NoneOfYourBusiness
-      - MONGO_KEYFILE=OM-WORKSHOP-KEYS
+      - MONGO_KEYFILE=WORKSHOP
       - MONGO_HOSTS=mongodb.mongodb.svc.cluster.local
       - >-
         MONGO_PREFS={
