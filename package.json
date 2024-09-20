@@ -1,9 +1,6 @@
 {
   "name": "openmove_kube_workshop_2024",
   "version": "1.0.0",
-  "scripts": {
-    "build": "npm run build --workspaces --if-present"
-  },
   "workspaces":[
     "packages/*"
   ],
@@ -12,6 +9,11 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.0.1"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "port-forward": "cluster/_scripts/port-forward/forward.sh",
+    "disable-port-forward": "cluster/_scripts/port-forward/stop-forward.sh"
   },
   "author": "riccardo.martinelli@openmove.com",
   "license": "ISC"

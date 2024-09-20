@@ -11,18 +11,17 @@ PROBE_PORT = os.getenv('PROBE_PORT', '3334')
 # MONGO
 
 MONGO_PREFIX = os.getenv('MONGO_PREFIX', 'mongodb')
-HTTP_CLIENT_MONGO = os.getenv('HTTP_CLIENT_MONGO', '0p3nM0v3')
-MONGO_USERNAME = os.getenv('MONGO_USERNAME', 'gtfs')
-MONGO_PASSWORD = os.getenv('MONGO_PASSWORD', 'gtfs')
+MONGO_USERNAME = os.getenv('MONGO_USERNAME', 'WhosAsking')
+MONGO_PASSWORD = os.getenv('MONGO_PASSWORD', 'NoneOfYourBusiness')
 MONGO_HOST = os.getenv('MONGO_HOST', '127.0.0.1')
-MONGO_DATABASE = os.getenv('MONGO_DATABASE', '0p3nM0v3')
+MONGO_DATABASE = os.getenv('MONGO_DATABASE', 'admin')
 
 # RABBIT
 
 RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', '127.0.0.1')
-RABBITMQ_USERNAME = os.getenv('RABBITMQ_USERNAME', 'gtfs-reactor')
-RABBITMQ_PASSWORD = os.getenv('RABBITMQ_PASSWORD', 'gtfs-reactor')
-RABBITMQ_VIRTUALHOSTS = os.getenv('RABBITMQ_VIRTUALHOSTS', 'reactor')
+RABBITMQ_USERNAME = os.getenv('RABBITMQ_USERNAME', 'CantCatchMe')
+RABBITMQ_PASSWORD = os.getenv('RABBITMQ_PASSWORD', 'TooSlow123')
+RABBITMQ_VIRTUALHOSTS = os.getenv('RABBITMQ_VIRTUALHOSTS', '/')
 
 class Options:
   def __init__(self, log):

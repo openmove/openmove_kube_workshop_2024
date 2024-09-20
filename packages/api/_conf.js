@@ -10,14 +10,14 @@ const {name, description, version} = require('./package.json')
       SAME_SITE = 'true',
 
       RABBITMQ_ADDRESSES = '127.0.0.1',
-      RABBITMQ_USERNAME = 'way-api',
-      RABBITMQ_PASSWORD = 'way-api',
-      RABBITMQ_VIRTUALHOSTS = 'reactor',
+      RABBITMQ_USERNAME = 'CantCatchMe',
+      RABBITMQ_PASSWORD = 'TooSlow123',
+      RABBITMQ_VIRTUALHOSTS = '/',
 
-      MONGO_USERNAME = 'way',
-      MONGO_PASSWORD = 'way',
+      MONGO_USERNAME = 'WhosAsking',
+      MONGO_PASSWORD = 'NoneOfYourBusiness',
       MONGO_HOSTS = '127.0.0.1',
-      MONGO_DATABASES = '0p3nM0v3,R3QU35T5',
+      MONGO_DATABASES = 'admin',
       MONGO_ADDITIONAL_OPTIONS = '{}',
       MONGO_PREFS = JSON.stringify({
         'authSource': 'admin',
@@ -51,7 +51,7 @@ const status = function status() {
 
 module.exports = {
   'identity': {
-    'channel': 'way',
+    'channel': 'workshop',
     'isSecure': protocol === 'https',
     'httpOnly': HTTP_ONLY === 'true',
     'sameSite': SAME_SITE === 'true',

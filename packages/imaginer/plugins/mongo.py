@@ -5,10 +5,11 @@ def create_connection(confs):
   mongoConfs = confs.params['mongo']
 
   try:
-    url = f"{mongoConfs['prefix']}://{mongoConfs['username']}:{mongoConfs['password']}@{mongoConfs['host']}/{mongoConfs['database']}"
+    url = f"{mongoConfs['prefix']}://{mongoConfs['username']}:{mongoConfs['password']}@{mongoConfs['host']}/{mongoConfs['database']}?authSource=admin&directConnection=true"
 
     confs.log.info('Connecting to mongo with url %s', url)
-    client = MongoClient('mongodb://gtfs:gtfs@localhost:27017/database?authSource=admin&directConnection=true', serverSelectionTimeoutMS=15000)
+    # client = MongoClient('mongodb://gtfs:gtfs@localhost:27017/database?authSource=admin&directConnection=true', serverSelectionTimeoutMS=15000)
+    client = MongoClient(url, serverSelectionTimeoutMS=15000)
     client.admin.command('ismaster')
     confs.mongo = client
 
