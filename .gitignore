@@ -6,3 +6,8 @@
 ## Python
 
 **/__pycache__
+
+
+## K8s
+
+**/cluster/_scripts/port-forward/logs/**
