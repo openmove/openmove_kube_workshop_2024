@@ -26,6 +26,7 @@
         "fastify-plugin": "4.2.1",
         "mongodb": "3.7.3",
         "pino": "8.5.0",
+        "protobufjs": "^7.4.0",
         "query-string": "7.1.1"
     },
     "scripts": {

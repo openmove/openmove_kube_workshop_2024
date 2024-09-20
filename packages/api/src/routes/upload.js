@@ -9,7 +9,7 @@ module.exports = fastifyPlugin(async(server, {
 }) => {
   const {log} = server
       , {identity} = confs
-      , {images} = models
+      , {images} = models;
 
   log.info({identity}, '[ROUTES] Istantiating upload request');
 
@@ -22,36 +22,17 @@ module.exports = fastifyPlugin(async(server, {
     },
     'handler': async(request, reply) => {
       log.info('[ROUTES] new upload request');
-      const chunks = [];
 
       try {
-        const data = await request.file();
+        const data = await request.file()
+            , storeResult = await images.storeImage(data);
 
-        debugger
-
-        for await (const chunk of data.file) {
-          chunks.push(chunk);
-        }
-        const buffer = Buffer.concat(chunks);
-
-        // Crea il documento che verrà inserito nel database
-        const fileDoc = {
-          filename: data.filename,
-          mimetype: data.mimetype,
-          size: data.file.bytesRead,
-          data: buffer,
-          uploadDate: new Date()
-        };
-
-        // const collection = db.collection('uploads');
-        // const result = await collection.insertOne(fileDoc);
-
-
+        await images.publishProcessRequest(storeResult);
 
         reply.code(200);
-        return 'ok';
+        return storeResult;
       } catch (err) {
-        throw new Error('[ROUTES] Something went wrong in test route');
+        throw new Error(`[ROUTES] Something went wrong during upload of image: ${err}`);
       }
     }
   });

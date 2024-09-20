@@ -8,10 +8,6 @@ module.exports = fastifyPlugin(async(server, {
   mongodb,
   status
 }) => {
-
-  debugger
-  server.log.warn({mongodb})
-
   const {
     username,
     password,
