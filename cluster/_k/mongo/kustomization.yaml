@@ -1,0 +1,17 @@
+secretGenerator:
+  -
+    namespace: mongodb
+    name: mongodb
+    literals:
+      - MONGO_ADMIN_USER=WhosAsking
+      - MONGO_ADMIN_PASS=NoneOfYourBusiness
+      - MONGO_KEYFILE=OM-WORKSHOP-KEYS
+      - MONGO_HOSTS=mongodb.mongodb.svc.cluster.local
+      - >-
+        MONGO_PREFS={
+          "replicaSet": "rs0",
+          "readPreference": "primary",
+          "authSource": "admin"
+        }
+generatorOptions:
+ disableNameSuffixHash: true

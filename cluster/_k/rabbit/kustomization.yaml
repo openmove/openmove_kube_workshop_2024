@@ -1,0 +1,11 @@
+secretGenerator:
+  -
+    namespace: rabbitmq
+    name: rabbitmq
+    literals:
+      - RABBITMQ_ERLANG_COOKIE=rabbitmq-k8s
+      - RABBITMQ_ADMIN_USER=CantCatchMe
+      - RABBITMQ_ADMIN_PASSWORD=TooSlow123
+      - RABBITMQ_ADDRESSES=rabbitmq-management.rabbitmq
+generatorOptions:
+ disableNameSuffixHash: true

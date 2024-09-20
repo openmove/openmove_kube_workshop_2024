@@ -1,0 +1,218 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mongo-sidecar-service-account
+  namespace: mongodb
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mongo-sidecar-role
+  namespace: mongodb
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mongo-sidecar-role-binding
+  namespace: mongodb
+subjects:
+  -
+    kind: ServiceAccount
+    name: mongo-sidecar-service-account
+roleRef:
+  kind: Role
+  name: mongo-sidecar-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: mongodb
+  labels:
+    db: mongodb
+spec:
+  clusterIP: None
+  ports:
+    -
+      name: mongodb
+      port: 27017
+      targetPort: 27017
+      protocol: TCP
+  selector:
+    db: mongodb
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: mongodb
+  name: mongodb
+spec:
+  selector:
+    matchLabels:
+      db: mongodb
+  serviceName: mongodb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        db: mongodb
+    spec:
+      serviceAccountName: mongo-sidecar-service-account
+      terminationGracePeriodSeconds: 10
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            -
+              labelSelector:
+                matchExpressions:
+                  -
+                    key: db
+                    operator: In
+                    values:
+                      - mongodb
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+        -
+          name: mongo-sidecar
+          image: cvallance/mongo-k8s-sidecar
+          env:
+            -
+              name: KUBE_NAMESPACE
+              value: "mongodb"
+            -
+              name: KUBERNETES_MONGO_SERVICE_NAME
+              value: "mongodb"
+            - name: MONGODB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_ADMIN_USER
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_ADMIN_PASS
+            - name: MONGODB_DATABASE
+              value: admin
+        -
+          name: mongo
+          image: mongo:4.2.5
+          command:
+            - /bin/sh
+            - -c
+            - >
+              if [ -f /data/db/admin-user.lock ]; then
+                echo "${HOSTNAME} Starting Mongo Daemon with runtime settings (clusterAuthMode)"
+                mongod \
+                  --wiredTigerCacheSizeGB 0.5 \
+                  --replSet rs0 \
+                  --bind_ip_all \
+                  --ipv6 \
+                  --journal \
+                  --directoryperdb \
+                  --clusterAuthMode keyFile --keyFile /etc/keyfile/MONGO_KEYFILE \
+                  --setParameter authenticationMechanisms=SCRAM-SHA-1;
+              else
+                echo "${HOSTNAME} Starting Mongo Daemon with setup setting"
+                mongod \
+                  --journal \
+                  --directoryperdb;
+              fi;
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - >
+                    if [ ! -f /data/db/admin-user.lock ]; then
+                      echo "${HOSTNAME} no Admin-user.lock file found yet"
+                      while (! mongo --eval "db.adminCommand('ping')"); do sleep 10; echo "KUBERNETES LOG $HOSTNAME - waiting another 10 seconds for mongo to start" >> /data/db/configlog.txt; done;
+                      touch /data/db/admin-user.lock
+                      if [ "$HOSTNAME" = "mongodb-0" ]; then
+                        echo "${HOSTNAME} creating admin user ${MONGO_ADMIN_USER}"
+                        mongo --eval "db = db.getSiblingDB('admin'); db.createUser({ user: '${MONGO_ADMIN_USER}', pwd: '${MONGO_ADMIN_PASS}', roles: [{ role: 'root', db: 'admin' }]});" >> /data/db/config.log
+                      fi;
+                      echo "${HOSTNAME} shutting mongod down for final restart"
+                      mongod --shutdown;
+                    fi;
+          imagePullPolicy: "IfNotPresent"
+          startupProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+                ["/bin/sh", "-c", "mongo -u ${MONGO_ADMIN_USER} -p ${MONGO_ADMIN_PASS} --eval \"rs.status()\" | grep 'myState' | grep -vq '10,'"]
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: 1024Mi
+              cpu: 250m
+            limits:
+              memory: 1024Mi
+              cpu: 250m
+          ports:
+            -
+              containerPort: 27017
+          env:
+            -
+              name: MONGO_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_ADMIN_USER
+            -
+              name: MONGO_ADMIN_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_ADMIN_PASS
+          volumeMounts:
+            -
+              name: mongodb-key
+              mountPath: /etc/keyfile
+              readOnly: true
+            -
+              name: mongodb-configdb-pvc
+              mountPath: /data/configdb
+            -
+              name: mongodb-data-pvc
+              mountPath: /data/db
+      volumes:
+        -
+          name: mongodb-key
+          secret:
+            defaultMode: 0400
+            secretName: mongodb
+  volumeClaimTemplates:
+    -
+      metadata:
+        name: mongodb-configdb-pvc
+      spec:
+        accessModes:
+          -
+            ReadWriteOnce
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi
+    -
+      metadata:
+        name: mongodb-data-pvc
+      spec:
+        accessModes:
+          -
+            ReadWriteOnce
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 5Gi
