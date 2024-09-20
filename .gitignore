@@ -10,4 +10,6 @@
 
 ## K8s
 
-**/cluster/_scripts/port-forward/logs/**
+# cluster/_scripts/port-forward/logs
+
+# !cluster/_scripts/port-forward/logs/.keep
