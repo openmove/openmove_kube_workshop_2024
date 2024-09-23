@@ -1,5 +1,7 @@
 'use strict';
 
+const {'v4': uuid} = require('uuid');
+
 const PLATFORM_EXCHANGE = 'platform.exchange'
     , PROCESS_IMAGE_QUEUE = 'imaginer.images'
     , PROCESS_IMAGE_ROUTING_KEY = 'process.image.request';
@@ -40,9 +42,11 @@ module.exports = async({
     }
 
     const buffer = Buffer.concat(chunks);
+    const processId = uuid();
     const fileDoc = {
       filename,
       mimetype,
+      processId,
       'data': buffer,
       'createDate': new Date()
     };
@@ -55,15 +59,17 @@ module.exports = async({
     return {
       size,
       filename,
+      processId,
       'imageId': insertedId
     };
   };
 
   const publishProcessRequest = async imageInfo => {
-    const {imageId, filename} = imageInfo;
+    const {imageId, filename, processId} = imageInfo;
     const payload = {
       'imageId': String(imageId),
-      filename
+      filename,
+      processId
     };
     const buffer = Buffer.from(JSON.stringify(payload));
 

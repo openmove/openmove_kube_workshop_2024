@@ -9,17 +9,15 @@ const {name, description, version} = require('./package.json')
       HTTP_ONLY = 'true',
       SAME_SITE = 'true',
 
-      //RABBITMQ_ADDRESSES = '127.0.0.1',
-      RABBITMQ_ADDRESSES = 'rabbitmq.rabbitmq.svc.cluster.local',
+      RABBITMQ_ADDRESSES = '127.0.0.1',
       RABBITMQ_USERNAME = 'CantCatchMe',
       RABBITMQ_PASSWORD = 'TooSlow123',
       RABBITMQ_VIRTUALHOSTS = '/',
 
       MONGO_USERNAME = 'WhosAsking',
       MONGO_PASSWORD = 'NoneOfYourBusiness',
-      //MONGO_HOSTS = '127.0.0.1',
+      MONGO_HOSTS = '127.0.0.1',
 
-      MONGO_HOSTS = 'mongodb.mongodb.svc.cluster.local',
       MONGO_DATABASES = 'admin',
       MONGO_ADDITIONAL_OPTIONS = '{}',
       MONGO_PREFS = JSON.stringify({

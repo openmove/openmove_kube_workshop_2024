@@ -13,6 +13,8 @@ def callback_factory(confs, models):
       json_body = body.decode()
       data = json.loads(json_body)
 
+      print(data)
+
       storage = models['storage']
       images = models['images']
 
@@ -28,7 +30,7 @@ def callback_factory(confs, models):
       ])(image)
 
       processed_data = images.encode_binary(processed_image)
-      storage.store_processed_image(confs, processed_data, data['filename'])
+      storage.store_processed_image(confs, processed_data, data)
 
       ch.basic_ack(delivery_tag=method.delivery_tag)
       confs.log.debug("Process of image completed")

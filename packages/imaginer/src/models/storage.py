@@ -11,13 +11,15 @@ def retrieve_image(confs, id):
   return document
 
 
-def store_processed_image(confs, data, filename):
+def store_processed_image(confs, binary_data, meta_data):
   db = confs.mongo['admin']
   collection = db['processed_images']
 
+
   confs.log.debug(f'Storing processed image in mongo')
   collection.insert_one({
-    'data': data,
-    'filename': filename,
+    'data': binary_data,
+    'filename': meta_data["filename"],
+    'processId': meta_data["processId"],
     'createDate': datetime.now()
   })
