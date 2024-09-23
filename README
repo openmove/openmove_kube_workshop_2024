@@ -1,0 +1,27 @@
+#HOW TO
+###MINIKUBE
+
+Install minikube and start it
+
+
+###Create namespace
+
+cd cluster/specs/ns
+k apply -f mongodb.yaml
+k apply -f rabbitmq.yaml
+
+cd cluster/specs/rabbit
+k apply -f rabbitmq.yaml
+
+cd cluster/specs/mongo-arm
+k apply -f mongodb-arm.yaml
+
+cd cluster/specs/mongo
+k apply -f mongodb.yaml
+
+### Apply secrets 
+cd cluster/k && k apply -k mongo
+
+cd cluster/k && k apply -k rabbit
+
+
