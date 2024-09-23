@@ -14,3 +14,7 @@ class Consumer:
     except KeyboardInterrupt:
       self.log.warning('Consumer connection interrupted. Closing.')
       self.amqp_connection.close()
+
+
+def setup_consumer(confs):
+  confs.Consumer = Consumer

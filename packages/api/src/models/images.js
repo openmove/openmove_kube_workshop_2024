@@ -8,8 +8,7 @@ const PLATFORM_EXCHANGE = 'platform.exchange'
 module.exports = async({
   log,
   mongo,
-  amqp,
-  protos
+  amqp
 }) => {
   log.debug('[MODELS] Preparing to istantiate Image module');
 
@@ -44,9 +43,8 @@ module.exports = async({
     const fileDoc = {
       filename,
       mimetype,
-      size,
       'data': buffer,
-      'uploadDate': new Date()
+      'createDate': new Date()
     };
 
     log.debug({filename, mimetype, size}, '[IMAGES] Storing image');
@@ -63,12 +61,11 @@ module.exports = async({
 
   const publishProcessRequest = async imageInfo => {
     const {imageId, filename} = imageInfo;
-    const {ProcessImage} = protos;
     const payload = {
       'imageId': String(imageId),
       filename
     };
-    const buffer = ProcessImage.encode(payload).finish();
+    const buffer = Buffer.from(JSON.stringify(payload));
 
     return await channel.publish(PLATFORM_EXCHANGE, PROCESS_IMAGE_ROUTING_KEY, buffer);
   };

@@ -1,8 +1,12 @@
 from . import actions
-from .consumer import Consumer
+from . import models
+from . import consumer
 
 def start_imaginer(confs):
-  consumers = actions.prepare_consumers(confs, Consumer)
+  consumer.setup_consumer(confs)
+  models_impl = models.get_models()
+  consumers = actions.prepare_consumers(confs, models_impl)
 
-  for consumer in consumers:
-    consumer.start_consuming()
+
+  for c in consumers:
+    c.start_consuming()

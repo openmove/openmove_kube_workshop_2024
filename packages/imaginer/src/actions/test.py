@@ -9,14 +9,14 @@ def callback_factory(confs):
   return callback
 
 
-def create(confs, Consumer):
+def create(confs):
   amqp_setup = {
     'queue': QUEUE,
     'durable':  True,
     'auto_ack': AUTO_ACK,
     'callback': callback_factory(confs)
   }
-  test_consumer = Consumer(confs, amqp_setup)
+  test_consumer = confs.Consumer(confs, amqp_setup)
   confs.log.debug('Test consumer created')
 
   return test_consumer
