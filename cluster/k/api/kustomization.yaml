@@ -1,0 +1,9 @@
+secretGenerator:
+  -
+    namespace: system
+    name: api
+    literals:
+      - MONGO_HOSTS=mongodb.mongodb.svc.cluster.local
+      - RABBITMQ_ADDRESSES=rabbitmq.rabbitmq.svc.cluster.local
+generatorOptions:
+ disableNameSuffixHash: true
