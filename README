@@ -1,15 +1,16 @@
-#HOW TO
+# HOW TO
 
 ### Microk8s
 
 Install microk8s with the following command:
+
 ```
 cd cluster/scripts/microk8s
 chmod +x install.sh
 ./install.sh
 ```
 
-###Create namespace
+### Create namespace
 ```
 cd cluster/ns
 microk8s kubectl apply -f mongodb.yaml
@@ -63,5 +64,11 @@ microk8s kubectl apply -f www.yaml
 ```
 cd cluster/specs/imaginer
 microk8s kubectl apply -f imaginer.yaml
+```
+
+### Port forward 
+```
+cd cluster/_scripts/port-forward
+./forward.sh
 ```
 
