@@ -20,7 +20,7 @@ spec:
           image: alessandroperetti89/api:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
           envFrom:
             -
               secretRef:

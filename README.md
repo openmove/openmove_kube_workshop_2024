@@ -72,5 +72,14 @@ cd cluster/_scripts/port-forward
 ./forward.sh
 ```
 
-Do you want install 
+### Port forward
 
+In a terminal run:
+``` 
+microk8s kubectl port-forward www-service 8080:80
+```
+
+In another terminal run:
+```
+microk8s kubectl port-forward api-service 8081:81
+```
