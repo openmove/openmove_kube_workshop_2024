@@ -18,9 +18,10 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 3000  
-          env:
-            - name: NODE_ENV
-              value: "production"
+          envFrom:
+            -
+              secretRef:
+                name: www-secret
 ---
 apiVersion: v1
 kind: Service

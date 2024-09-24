@@ -1,5 +1,5 @@
 start:
-	python ./main.py
+	python3 ./main.py
 
 generate-env-file:
 	conda env export > environment.yml

@@ -1,0 +1,9 @@
+secretGenerator:
+  -
+    namespace: system
+    name: imaginer-secret
+    literals:
+      - RABBITMQ_HOST=rabbitmq.rabbitmq.svc.cluster.local
+      - MONGO_HOST=mongodb.mongodb.svc.cluster.local
+generatorOptions:
+ disableNameSuffixHash: true

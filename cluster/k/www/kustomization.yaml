@@ -1,0 +1,8 @@
+secretGenerator:
+  -
+    namespace: system
+    name: www-secret
+    literals:
+      - API_URL=placeholder
+generatorOptions:
+ disableNameSuffixHash: true
