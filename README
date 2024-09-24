@@ -48,4 +48,9 @@ cd cluster/specs/api
 microk8s kubectl apply -f api.yaml
 ```
 
+### Apply WWW
+```
+cd cluster/specs/www
+microk8s kubectl apply -f www.yaml
+```
 

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: alessandroperetti89/api
+          image: alessandroperetti89/api:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
