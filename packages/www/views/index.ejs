@@ -10,8 +10,10 @@
         <h1>Drag-and-Drop Image Compressor</h1>
         <div id="drop-area">Drag here to compress</div>
         <input type="file" accept="image/*" id="file-input" hidden />
-        <div id="preview-container"></div>
 
+        <script>
+            const apiBaseUrl = '<%= apiBaseUrl %>';
+        </script>
         <script src="main_script.js"></script>
     </body>
 </html>
