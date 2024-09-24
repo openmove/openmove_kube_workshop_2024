@@ -18,7 +18,7 @@ spec:
           image: alessandroperetti89/www:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000  
+            - containerPort: 8080  
           envFrom:
             -
               secretRef:
@@ -31,7 +31,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 81
-      targetPort: 3000
+    - port: 80
+      targetPort: 8080
   selector:
     app: www
