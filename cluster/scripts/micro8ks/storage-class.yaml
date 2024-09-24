@@ -1,0 +1,14 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+  creationTimestamp: "2023-10-09T09:50:58Z"
+  labels:
+    addonmanager.kubernetes.io/mode: EnsureExists
+  name: standard
+  resourceVersion: "738"
+  uid: ac226973-ef09-4bdf-afb0-eb538e40b931
+provisioner: microk8s.io/hostpath
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

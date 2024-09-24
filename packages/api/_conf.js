@@ -9,14 +9,14 @@ const {name, description, version} = require('./package.json')
       HTTP_ONLY = 'true',
       SAME_SITE = 'true',
 
-      RABBITMQ_ADDRESSES = '127.0.0.1',
+      RABBITMQ_ADDRESSES = process.env.RABBITMQ_ADDRESSES || '127.0.0.1',
       RABBITMQ_USERNAME = 'CantCatchMe',
       RABBITMQ_PASSWORD = 'TooSlow123',
       RABBITMQ_VIRTUALHOSTS = '/',
 
       MONGO_USERNAME = 'WhosAsking',
       MONGO_PASSWORD = 'NoneOfYourBusiness',
-      MONGO_HOSTS = '127.0.0.1',
+      MONGO_HOSTS = process.env.MONGO_HOSTS || '127.0.0.1',
 
       MONGO_DATABASES = 'admin',
       MONGO_ADDITIONAL_OPTIONS = '{}',
