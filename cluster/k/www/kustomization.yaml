@@ -3,6 +3,6 @@ secretGenerator:
     namespace: system
     name: www-secret
     literals:
-      - API_URL=api-service-system.cluster.local
+      - API_URL=api-service.system.svc.cluster.local
 generatorOptions:
  disableNameSuffixHash: true
