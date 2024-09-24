@@ -1,7 +1,7 @@
 secretGenerator:
   -
     namespace: system
-    name: api
+    name: api-secret
     literals:
       - MONGO_HOSTS=mongodb.mongodb.svc.cluster.local
       - RABBITMQ_ADDRESSES=rabbitmq.rabbitmq.svc.cluster.local

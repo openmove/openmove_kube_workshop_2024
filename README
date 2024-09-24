@@ -1,27 +1,56 @@
 #HOW TO
-###MINIKUBE
 
-Install minikube and start it
+### Microk8s
 
+Install microk8s wit the following command:
+```
+cd cluster/scripts/microk8s
+chmod +x install.sh
+./install.sh
+```
 
 ###Create namespace
-
-cd cluster/specs/ns
-k apply -f mongodb.yaml
-k apply -f rabbitmq.yaml
-
-cd cluster/specs/rabbit
-k apply -f rabbitmq.yaml
-
-cd cluster/specs/mongo-arm
-k apply -f mongodb-arm.yaml
-
-cd cluster/specs/mongo
-k apply -f mongodb.yaml
+```
+cd cluster/ns
+microk8s kubectl apply -f mongodb.yaml
+microk8s kubectl apply -f rabbitmq.yaml
+microk8s kubectl apply -f system.yaml
+```
 
 ### Apply secrets 
-cd cluster/k && k apply -k mongo
+```
+cd cluster/k
+microk8s kubectl apply -k mongo
+microk8s kubectl apply -k rabbit
+microk8s kubectl apply -k api
+```
 
-cd cluster/k && k apply -k rabbit
+### Apply specs
+```
+cd cluster/specs/rabbit
+microk8s kubectl apply -f rabbitmq.yaml
+```
 
+### MONGO For ARM pc
+```
+cd cluster/specs/mongo-arm
+microk8s kubectl apply -f mongodb-arm.yaml
+
+### MONGO For other pc
+```
+cd cluster/specs/mongo
+microk8s kubectl apply -f mongodb.yaml
+```
+
+### Apply API
+```
+cd cluster/specs/api
+microk8s kubectl apply -f api.yaml
+```
+
+### Apply WWW
+```
+cd cluster/specs/www
+microk8s kubectl apply -f www.yaml
+```
 
