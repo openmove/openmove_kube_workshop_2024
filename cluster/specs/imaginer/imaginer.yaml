@@ -15,18 +15,18 @@ spec:
     spec:
       containers:
       - name: imaginer-container
-        image: alessandroperetti89/imaginer # personal docker hub
-        #command: ["/bin/bash", "-c", "make start"] # injected from Dockerfile
+        image: alessandroperetti89/imaginer:latest # personal docker hub
+        imagePullPolicy: Always
         envFrom:
           -
             secretRef:
-              name: api-secret
-        volumeMounts:
-        - name: app-volume
-          mountPath: /app
-      volumes:
-      - name: app-volume
-        emptyDir: {}
+              name: imaginer-secret
+      #   volumeMounts:
+      #   - name: app-volume
+      #     mountPath: /app
+      # volumes:
+      # - name: app-volume
+      #   emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
