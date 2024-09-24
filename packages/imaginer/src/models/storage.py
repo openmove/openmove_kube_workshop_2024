@@ -21,5 +21,6 @@ def store_processed_image(confs, binary_data, meta_data):
     'data': binary_data,
     'filename': meta_data["filename"],
     'processId': meta_data["processId"],
+    'mimetype': meta_data["mimetype"],
     'createDate': datetime.now()
   })

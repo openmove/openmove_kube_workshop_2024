@@ -6,6 +6,8 @@ def decode_binary(binary):
 
 def encode_binary(image):
     image_binary = io.BytesIO()
+    image.save(image_binary, format='JPEG')
+
     return image_binary.getvalue()  # Return the binary data
 
 def pixelate(image, pixel_size=10):

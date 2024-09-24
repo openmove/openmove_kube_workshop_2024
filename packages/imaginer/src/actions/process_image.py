@@ -9,34 +9,27 @@ def callback_factory(confs, models):
   def callback(ch, method, properties, body):
     confs.log.info('new message received')
 
-    try:
-      json_body = body.decode()
-      data = json.loads(json_body)
+    json_body = body.decode()
+    data = json.loads(json_body)
+    storage = models['storage']
+    images = models['images']
 
-      print(data)
+    confs.log.debug(f'new image to parse called: {data['filename']}')
+    document = storage.retrieve_image(confs, data['imageId'])
+    image = images.decode_binary(document['data'])
 
-      storage = models['storage']
-      images = models['images']
+    processed_image = random.choice([
+      images.blur,
+      images.rotate,
+      images.invert,
+      images.pixelate
+    ])(image)
 
-      confs.log.debug(f'new image to parse called: {data['filename']}')
-      document = storage.retrieve_image(confs, data['imageId'])
-      image = images.decode_binary(document['data'])
+    processed_data = images.encode_binary(processed_image)
+    storage.store_processed_image(confs, processed_data, data)
 
-      processed_image = random.choice([
-        images.blur,
-        images.rotate,
-        images.invert,
-        images.pixelate
-      ])(image)
-
-      processed_data = images.encode_binary(processed_image)
-      storage.store_processed_image(confs, processed_data, data)
-
-      ch.basic_ack(delivery_tag=method.delivery_tag)
-      confs.log.debug("Process of image completed")
-
-    except:
-      confs.log.warning('It was impossible to ack the message')
+    ch.basic_ack(delivery_tag=method.delivery_tag)
+    confs.log.debug("Process of image completed")
 
 
   return callback

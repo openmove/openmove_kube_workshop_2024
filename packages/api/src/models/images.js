@@ -17,7 +17,8 @@ module.exports = async({
   const {admin} = mongo
       , {'/': reactor} = amqp
       , channel = await reactor.createChannel()
-      , imagesCollection = admin.db.collection('raw_uploads');
+      , imagesCollection = admin.db.collection('raw_uploads')
+      , imagesProcessedCollection = admin.db.collection('processed_images');
 
   await channel.assertExchange(PLATFORM_EXCHANGE, 'direct', {
     'durable': true,
@@ -58,6 +59,7 @@ module.exports = async({
 
     return {
       size,
+      mimetype,
       filename,
       processId,
       'imageId': insertedId
@@ -65,9 +67,10 @@ module.exports = async({
   };
 
   const publishProcessRequest = async imageInfo => {
-    const {imageId, filename, processId} = imageInfo;
+    const {imageId, filename, processId, mimetype} = imageInfo;
     const payload = {
       'imageId': String(imageId),
+      mimetype,
       filename,
       processId
     };
@@ -76,8 +79,27 @@ module.exports = async({
     return await channel.publish(PLATFORM_EXCHANGE, PROCESS_IMAGE_ROUTING_KEY, buffer);
   };
 
+  const getProcessedImage = async processId => {
+    log.debug({processId}, 'Retrieving processed image from db');
+
+    try {
+      const {data, mimetype} = await imagesProcessedCollection.findOne({
+        processId
+      });
+
+      log.debug({mimetype}, 'Processed image retrieved');
+      return {
+        data,
+        mimetype
+      };
+    } catch (err) {
+      log.error(`Something went wrong while retrieving processed image: ${err.message}`);
+    }
+  };
+
   return {
     storeImage,
+    getProcessedImage,
     publishProcessRequest
   };
 };

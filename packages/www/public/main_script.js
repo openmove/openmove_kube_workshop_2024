@@ -1,3 +1,5 @@
+/* eslint-disable */
+const REDIRECT_DELAY = 2000;
 const dropArea = document.getElementById('drop-area');
 const fileInput = document.getElementById('file-input');
 
@@ -40,8 +42,10 @@ function handleDrop(e) {
 
 function uploadFile() {
     const xhr = new XMLHttpRequest();
+    const url = `${apiBaseUrl}/upload`;
+    const formData = new FormData();
 
-    xhr.open('POST', 'http://localhost:3001/upload');
+    xhr.open('POST', url);
 
     xhr.upload.addEventListener('progress', event => {
         if (event.lengthComputable) {
@@ -51,17 +55,31 @@ function uploadFile() {
         }
     });
 
+    xhr.addEventListener('error', () => {
+        dropArea.textContent = 'Unable to upload file. Drag and drop to retry.';
+    });
+
     xhr.addEventListener('load', () => {
         if (xhr.status === 200) {
             dropArea.textContent = 'File uploaded correctly!';
+            handleUploadSuccess(xhr);
         } else {
             dropArea.textContent = 'Unable to upload file. Drag and drop to retry.';
         }
     });
 
-    const formData = new FormData();
-
     formData.append('file', fileInput.files[0]);
 
     xhr.send(formData);
+}
+
+function handleUploadSuccess(xhr) {
+    const responseBody = xhr.responseText;
+    const data = JSON.parse(responseBody);
+    const processId = data.processId;
+    const url = `${apiBaseUrl}/download/${processId}`;
+
+    setTimeout(() => {
+        location.replace(url);
+    }, REDIRECT_DELAY);
 }
