@@ -42,7 +42,7 @@ function handleDrop(e) {
 
 function uploadFile() {
     const xhr = new XMLHttpRequest();
-    const url = `${apiBaseUrl}/upload`;
+    const url = `/upload`;
     const formData = new FormData();
 
     xhr.open('POST', url);
@@ -77,7 +77,7 @@ function handleUploadSuccess(xhr) {
     const responseBody = xhr.responseText;
     const data = JSON.parse(responseBody);
     const processId = data.processId;
-    const url = `${apiBaseUrl}/download/${processId}`;
+    const url = `/download/${processId}`;
 
     setTimeout(() => {
         location.href = url;
