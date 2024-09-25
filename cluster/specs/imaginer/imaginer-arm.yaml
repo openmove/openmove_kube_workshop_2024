@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: imaginer-container
-        image: alessandroperetti89/imaginer:latest # personal docker hub
+        image: andreaiossa/imaginer:latest
         imagePullPolicy: Always
         envFrom:
           - secretRef:

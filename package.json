@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "port-forward": "cluster/_scripts/port-forward/forward.sh",
+    "port-forward": "cluster/scripts/port-forward/forward.sh",
     "disable-port-forward": "cluster/scripts/port-forward/stop-forward.sh"
   },
   "author": "riccardo.martinelli@openmove.com",

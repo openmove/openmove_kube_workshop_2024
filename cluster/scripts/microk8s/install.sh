@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 function darwin_initialize() {
-  local CPU=${CPU:-2}
-  local MEMORY=${MEMORY:-2}
+  local CPU=${CPU:-4}
+  local MEMORY=${MEMORY:-4}
   local DISK=${DISK:-10}
   echo "Initializing microk8s cluster with ${CPU} cores, ${MEMORY} Gb of memory and ${DISK} Gb of storage"
 
@@ -30,6 +30,9 @@ function do_it() {
   if command -v microk8s &> /dev/null; then
     if [[ ! -z ${FORCE_mk8s_INIT} ]]; then
       echo "Force installation enabled, proceeding with reinstallation"
+      kubectl config delete-cluster microk8s-cluster
+      kubectl config delete-user admin
+      kubectl config delete-context microk8s
       microk8s stop 2> /dev/null
       microk8s uninstall 2> /dev/null
       multipass delete --all 2> /dev/null

@@ -26,12 +26,12 @@ spec:
               secretRef:
                 name: api-secret
           resources:
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
             requests:
-              memory: "256Mi"
-              cpu: "250m"
+              cpu: 200m
+              memory: 300M
+            limits:
+              cpu: 500m
+              memory: 600M
 ---
 apiVersion: v1
 kind: Service
@@ -45,7 +45,6 @@ spec:
     app: api
   ports:
     - protocol: TCP
-      port: 80 
+      port: 3001
       targetPort: 3001
-      nodePort: 30036
-  type: NodePort  
+  type: NodePort

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: www
-          image: alessandroperetti89/www:latest
+          image: andreaiossa/www-arm:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
