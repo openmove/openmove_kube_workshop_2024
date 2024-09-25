@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: alessandroperetti89/api:latest
+          image: andreaiossa/api-arm:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3001
@@ -43,7 +43,8 @@ metadata:
 spec:
   selector:
     app: api
-  type: ClusterIP
   ports:
-    - port: 3001
+    - protocol: TCP
+      port: 3001
       targetPort: 3001
+  type: NodePort

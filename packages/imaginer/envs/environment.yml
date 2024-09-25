@@ -1,0 +1,9 @@
+name: imaginer
+channels:
+  - conda-forge
+dependencies:
+  - colorlog
+  - pymongo
+  - pika
+  - pillow
+prefix: /opt/homebrew/Caskroom/miniforge/base/envs/imaginer
