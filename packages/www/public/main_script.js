@@ -61,7 +61,7 @@ function uploadFile() {
 
     xhr.addEventListener('load', () => {
         if (xhr.status === 200) {
-            dropArea.textContent = 'File uploaded correctly!';
+            dropArea.textContent = 'File uploaded correctly! Loading...';
             handleUploadSuccess(xhr);
         } else {
             dropArea.textContent = 'Unable to upload file. Drag and drop to retry.';
@@ -80,6 +80,6 @@ function handleUploadSuccess(xhr) {
     const url = `${apiBaseUrl}/download/${processId}`;
 
     setTimeout(() => {
-        location.replace(url);
+        location.href = url;
     }, REDIRECT_DELAY);
 }
