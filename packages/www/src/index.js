@@ -1,7 +1,8 @@
 'use strict';
 
 const express = require('express');
-const {'Proxy': proxy} = require('axios-express-proxy');
+// const {'Proxy': proxy} = require('axios-express-proxy');
+const proxy = require('express-http-proxy');
 const config = require('./config');
 
 const app = express();
@@ -17,8 +18,18 @@ app.get('/', (req, res) => {
     res.render('index', {'apiBaseUrl': config.api.baseUrl});
 });
 
-app.post('/upload', (req, res) => proxy(`${apiBaseUrl}/upload`, req, res));
-app.get('/download', (req, res) => proxy(`${apiBaseUrl}/download`, req, res));
+
+app.post('/upload', proxy(`${apiBaseUrl}/upload`));
+app.get('/download/:processId', proxy(`${apiBaseUrl}`, {
+    'proxyReqPathResolver'(req) {
+        // Extract processId from request parameters
+        const processId = req.params.processId;
+
+        // Return the full path to the external API, dynamically including the processId
+        return `/download/${processId}`;
+      }
+}));
+
 
 // startup
 app.listen(port, () => {
