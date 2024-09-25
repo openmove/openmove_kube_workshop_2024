@@ -76,10 +76,10 @@ cd cluster/_scripts/port-forward
 
 In a terminal run:
 ``` 
-microk8s kubectl port-forward www-service 8080:80
+microk8s kubectl port-forward svc/www-service 8080:80 -n system
 ```
 
 In another terminal run:
 ```
-microk8s kubectl port-forward api-service 8081:81
+microk8s kubectl port-forward svc/api-service 8081:80 -n system
 ```
