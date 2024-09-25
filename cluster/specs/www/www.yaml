@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: www
+  namespace: system
+  name: www-deplopyment
 spec:
   replicas: 1
   selector:
@@ -17,19 +18,21 @@ spec:
           image: alessandroperetti89/www:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000  
-          env:
-            - name: NODE_ENV
-              value: "production"
+            - containerPort: 8080  
+          envFrom:
+            -
+              secretRef:
+                name: www-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: system
   name: www-service
 spec:
   type: ClusterIP
   ports:
     - port: 80
-      targetPort: 3000
+      targetPort: 8080
   selector:
     app: www

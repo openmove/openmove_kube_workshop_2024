@@ -1,0 +1,45 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: system
+  name: imaginer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imaginer
+  template:
+    metadata:
+      labels:
+        app: imaginer
+    spec:
+      containers:
+      - name: imaginer-container
+        image: alessandroperetti89/imaginer:latest # personal docker hub
+        imagePullPolicy: Always
+        envFrom:
+          -
+            secretRef:
+              name: imaginer-secret
+      #   volumeMounts:
+      #   - name: app-volume
+      #     mountPath: /app
+      # volumes:
+      # - name: app-volume
+      #   emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: imaginer-service
+spec:
+  selector:
+    app: imaginer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+
+
