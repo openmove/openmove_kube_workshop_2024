@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
 function darwin_initialize() {
-  local CPU=${CPU:-4}
-  local MEMORY=${MEMORY:-6}
-  local DISK=${DISK:-60}
-  local GREEN='\033[0;32m'
-  local NC='\033[0m' # No Color
-  echo "${GREEN}Initializing microk8s cluster with ${CPU} cores, ${MEMORY} Gb of memory and ${DISK} Gb of storage.${NC}"
+  local CPU=${CPU:-2}
+  local MEMORY=${MEMORY:-2}
+  local DISK=${DISK:-10}
+  echo "Initializing microk8s cluster with ${CPU} cores, ${MEMORY} Gb of memory and ${DISK} Gb of storage"
 
   microk8s install --channel=1.26 --cpu=${CPU} --mem=${MEMORY} --disk=${DISK}
   microk8s status --wait-ready
@@ -16,10 +14,13 @@ function darwin_initialize() {
   microk8s kubectl delete storageclasses.storage.k8s.io microk8s-hostpath
   microk8s kubectl apply -f ./storage-class.yaml
 
-  echo "${GREEN}Microk8s started and ready!!${NC}"
+  echo "Microk8s started and ready!!"
   echo "If you want to setup a microk8s context refer to the guide in the doc. You will need the following info:"
 
   microk8s kubectl config view --raw
+
+  echo "Adding microk8s configuration to kube config file"
+  KUBECONFIG=~/.kube/config:<(microk8s config) kubectl config view --flatten > /tmp/config && mv /tmp/config ~/.kube/config
 }
 
 
