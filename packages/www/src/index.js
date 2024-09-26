@@ -18,8 +18,10 @@ app.get('/', (req, res) => {
     res.render('index', {'apiBaseUrl': config.api.baseUrl});
 });
 
+app.post('/upload', proxy(`${apiBaseUrl}/upload`, {
+    limit: '15mb'
+}));
 
-app.post('/upload', proxy(`${apiBaseUrl}/upload`));
 app.get('/download/:processId', proxy(`${apiBaseUrl}`, {
     'proxyReqPathResolver'(req) {
         // Extract processId from request parameters
