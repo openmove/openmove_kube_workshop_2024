@@ -1,6 +1,6 @@
-# HOW TO
+# Requirements
 
-### Microk8s
+MacOS only: Install Homebrew [Link](brew).
 
 Install microk8s with the following command:
 
@@ -9,6 +9,8 @@ cd cluster/scripts/microk8s
 chmod +x install.sh
 ./install.sh
 ```
+
+# Workshop
 
 ### Create namespace
 ```
@@ -64,12 +66,6 @@ microk8s kubectl apply -f www.yaml
 ```
 cd cluster/specs/imaginer
 microk8s kubectl apply -f imaginer.yaml
-```
-
-### Port forward 
-```
-cd cluster/_scripts/port-forward
-./forward.sh
 ```
 
 ### Port forward
